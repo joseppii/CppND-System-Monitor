@@ -20,14 +20,14 @@ Processor& System::Cpu() { return cpu_; }
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { 
     vector<int> pids = LinuxParser::Pids();
-    std::cout << "This is CMD: " << LinuxParser::UpTime(2018) << "\n";
+    std::cout << "This is CMD: " << LinuxParser::UpTime(2551) << "\n";
     for(int pid:pids){
         Process proc;
         proc.pid_ = pid;
         proc.cmd_ = LinuxParser::Command(pid);
         proc.user_ = LinuxParser::User(pid);
         proc.ram_ = LinuxParser::Ram(pid);
-        proc.upTime_ = LinuxParser::UpTime(pid);
+        proc.startTime_ = LinuxParser::UpTime(pid);
         processes_.emplace_back(proc);
     }
     

@@ -20,6 +20,7 @@ class Process {
   std::string cmd_;
   std::string ram_;
   long upTime_;
+  long startTime_;
   // TODO: Declare any necessary private members
  private:
    
