@@ -31,7 +31,6 @@ Processor& System::Cpu() {
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { 
     vector<int> pids = LinuxParser::Pids();
-    //std::cout << "This is CMD: " << LinuxParser::UpTime(2551) << "\n";
     for(int pid:pids){
         Process proc(pid);    
         processes_.emplace_back(proc);
