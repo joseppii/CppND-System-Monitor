@@ -111,7 +111,7 @@ long LinuxParser::Jiffies() {
   vector<string> utilization = LinuxParser::CpuUtilization();
   for (int i = 0; i <=kSteal_; i++) {
     if (i !=kIdle_) {
-      total += 0;//stol(utilization[i]);
+      total += stol(utilization[i]);
     }
   }
   return total; 
