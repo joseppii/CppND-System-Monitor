@@ -22,6 +22,9 @@ class Process {
   // Private members
  private:
   int pid_;
+  float cpu_;
+  long jiffies_;
+  long uptime_;
   std::string user_;
   std::string cmd_;
 };

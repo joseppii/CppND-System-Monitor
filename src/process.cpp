@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iostream>
 #include "linux_parser.h"
 
 #include "process.h"
@@ -21,14 +22,18 @@ int Process::Pid() { return pid_; }
 
 // Return this process's CPU utilization
 float Process::CpuUtilization() { 
-    long jiffies_t0, jiffies_t1, uptime_t0, uptime_t1;
-    jiffies_t0 = LinuxParser::ActiveJiffies(pid_);
-    uptime_t0 = LinuxParser::UpTime(pid_);
-    usleep(100000);
-    jiffies_t1 = LinuxParser::ActiveJiffies(pid_);
-    uptime_t1 = LinuxParser::UpTime(pid_);
+    long jiffies, uptime;
+    jiffies = LinuxParser::ActiveJiffies(pid_);
+    uptime = LinuxParser::UpTime(pid_);
 
-    return (float)(jiffies_t1 - jiffies_t0) / (float)(uptime_t1 - uptime_t0); 
+    long timediff = uptime - uptime_;
+	if (timediff == 0)
+ 		return 0;
+		
+    cpu_ = (float)(jiffies - jiffies_) / (float)(uptime - uptime_); 
+	jiffies_ = jiffies;
+	uptime_ = uptime;
+	return cpu_;
 }
 
 // Return the command that generated this process
@@ -43,6 +48,10 @@ string Process::User() { return user_; }
 // Return the age of this process (in seconds)
 long int Process::UpTime() { return LinuxParser::UpTime(pid_); }
 
-// TODO: Overload the "less than" comparison operator for Process objects
-// REMOVE: [[maybe_unused]] once you define the function
-bool Process::operator<(Process const& a[[maybe_unused]]) const { return true; }
+// Overloaded "less than" comparison operator for Process objects
+bool Process::operator<(Process const& a) const { 
+	if (cpu_ > a.cpu_) 
+		return true;
+	else
+		return false;
+}
