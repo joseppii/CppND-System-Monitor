@@ -162,7 +162,7 @@ vector<string> LinuxParser::CpuUtilization() {
       /* if (key.rfind("cpu",0) == 0) {          
         cpu_stats.push_back(line);
       }*/
-      if (value == "cpu") {
+      if ((value == "cpu") || (value == "")){
         continue;
       }
       cpu_stats.push_back(value);
