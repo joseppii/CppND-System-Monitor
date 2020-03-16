@@ -104,7 +104,7 @@ long LinuxParser::UpTime() {
   return 0;  
 }
 
-// TODO: Read and return the number of jiffies for the system
+// Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { 
   string line;
   long total = 0;
