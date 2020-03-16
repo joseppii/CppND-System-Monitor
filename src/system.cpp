@@ -15,20 +15,9 @@ using std::string;
 using std::vector;
 
 // Return the system's CPU
-Processor& System::Cpu() { 
-    string label, value;
-    vector<string> cpu_stats = LinuxParser::CpuUtilization();
-    string &cpu_stat = cpu_stats[0];
-    std::istringstream linestream(cpu_stat);
-    while (linestream >> label >> value) {      
-        if (label == ("cpu")) {          
-            std::cout << "Got jiffies!\n"; 
-        }
-    }     
-    return cpu_; 
-}
+Processor& System::Cpu() { return cpu_; }
 
-// TODO: Return a container composed of the system's processes
+// Return a container composed of the system's processes
 vector<Process>& System::Processes() { 
     vector<int> pids = LinuxParser::Pids();
     processes_ = {};
