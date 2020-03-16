@@ -7,11 +7,15 @@
 float Processor::Utilization() { 
 	long diff_active, diff_total;
 
-	long total_jiffies = LinuxParser::Jiffies();
-	long active_jiffies = LinuxParser::ActiveJiffies();
+	long total_jiffies_new = LinuxParser::Jiffies();
+	long active_jiffies_new = LinuxParser::ActiveJiffies();
+	
+	diff_total = total_jiffies_new - total_jiffies_;
+	diff_active = active_jiffies_new - active_jiffies_;
+	
+	total_jiffies_ = total_jiffies_new;
+	active_jiffies_ = active_jiffies_new;
 
-	diff_total = total_jiffies - total_jiffies_;
-	diff_active = active_jiffies - active_jiffies_;
-
-	return float(diff_total/diff_active) ;    
+ 	return ((float)diff_active / (float)diff_total);
+   
 }
