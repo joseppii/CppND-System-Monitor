@@ -280,7 +280,7 @@ long LinuxParser::UpTime(int pid) {
     while (std::getline(stream, line, ' ')) {
         stats.push_back(line);
     }
-    return stol(stats[21])/sysconf(_SC_CLK_TCK);
+    return LinuxParser::UpTime() -stol(stats[21])/sysconf(_SC_CLK_TCK);
   }      
   return 0; 
 }
