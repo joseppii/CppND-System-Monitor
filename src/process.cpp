@@ -14,6 +14,7 @@ using std::vector;
 
 Process::Process(int pid):pid_(pid) {
     cmd_ = LinuxParser::Command(pid);
+	cpu_ = Process::CpuUtilization();
     user_ = LinuxParser::User(pid);
 }
 
@@ -26,14 +27,7 @@ float Process::CpuUtilization() {
     jiffies = LinuxParser::ActiveJiffies(pid_);
     uptime = LinuxParser::UpTime(pid_);
 
-    long timediff = uptime - uptime_;
-	if (timediff == 0)
- 		return 0;
-		
-    cpu_ = (float)(jiffies - jiffies_) / (float)(uptime - uptime_); 
-	jiffies_ = jiffies;
-	uptime_ = uptime;
-	return cpu_;
+    return ((float)jiffies/sysconf(_SC_CLK_TCK)) / (float)(uptime); 
 }
 
 // Return the command that generated this process
