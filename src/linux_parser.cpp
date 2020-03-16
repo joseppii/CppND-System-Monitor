@@ -109,13 +109,11 @@ long LinuxParser::Jiffies() {
   string line;
   long total = 0;
   vector<string> utilization = LinuxParser::CpuUtilization();
-  for (int i = 0; i <=kSteal_; i++) {
-    if (i !=kIdle_) {
+  for (int i = kUser_; i <=kSteal_; i++) {
       total += stol(utilization[i]);
-    }
   }
   return total; 
-}
+} 
 
 // Read and return the number of active jiffies for a PID
 long LinuxParser::ActiveJiffies(int pid) { 
